@@ -178,6 +178,32 @@ bool extractNumberByOrder(const Pgn *pgn, size_t order, const uint8_t *data, siz
   return extractNumber(field, data, dataLen, startBit, field->size, value, &maxValue);
 }
 
+bool extractStringByOrder(const Pgn *pgn, size_t order, const uint8_t *data, size_t dataLen, char *str, size_t strLen)
+{
+  const Field *field     = &pgn->fieldList[order - 1];
+  size_t       bitOffset = getFieldOffsetByOrder(pgn, order);
+
+  data += bitOffset >> 3;
+  dataLen -= bitOffset >> 3;
+
+  size_t len = CB_MIN(field->size >> 3, strLen);
+  if (dataLen < (field->size >> 3))
+      return false;
+
+  memcpy(str, data, len);
+
+  // Replace 0xFF with 0x00
+    for (size_t i = 0; i < len; i++)
+    {
+        if (data[i] == 0xFF)
+        {
+            str[i] = 0;
+        }
+    }
+  str[len-1] = 0;
+  return true;
+}
+
 extern void printEmpty(const char *fieldName, int64_t exceptionValue)
 {
   if (showJson)

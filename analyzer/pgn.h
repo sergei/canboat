@@ -923,6 +923,7 @@ bool         extractNumber(const Field   *field,
                            int64_t       *value,
                            int64_t       *maxValue);
 bool         extractNumberByOrder(const Pgn *pgn, size_t order, const uint8_t *data, size_t dataLen, int64_t *value);
+bool extractStringByOrder(const Pgn *pgn, size_t order, const uint8_t *data, size_t dataLen, char *str, size_t strLen);
 
 void camelCase(bool upperCamelCase);
 
