@@ -33,7 +33,7 @@ typedef struct
   uint8_t  dst;
   uint8_t  src;
   uint8_t  len;
-  uint8_t  *data;
+  uint8_t  data[FASTPACKET_MAX_SIZE];
 } RawMessage;
 
 bool parseFastFormat(StringBuffer *src, RawMessage *msg);
